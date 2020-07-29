@@ -1,0 +1,26 @@
+{
+    "name": "enapso-file-watcher",
+    "version": "1.0.0",
+    "description": "enapso file monitoring component",
+    "main": "index.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/innotrade/enapso-file-watcher.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/innotrade/enapso-file-watcher/issues"
+    },
+    "homepage": "https://github.com/innotrade/enapso-file-watcher#readme",
+    "dependencies": {
+        "chokidar": "^3.4.1",
+        "filewatcher": "^3.0.1"
+    }
+}
