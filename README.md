@@ -9,6 +9,8 @@ To discuss questions and suggestions with the enapso, we'll be happy to meet you
 npm i enapso-file-watcher --save
 ```
 
+# Require the package
+
 ```
 const { EnapsoFileWatcher } = require('enapso-file-watcher');
 ```
