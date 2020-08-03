@@ -17,7 +17,7 @@ const { EnapsoFileWatcher } = require('enapso-file-watcher');
 
 # Examples
 
-# Add a File in watcher
+# Add a Single File or more in watcher
 
 ```javascript
 EnapsoFileWatcher.add([
@@ -35,7 +35,7 @@ EnapsoFileWatcher.add([
 
 To add a file or more than a file just need to pass the `path` and `id` of the file using the json array object format and it will be added successfully and we can watch if any change occur on this file.
 
-# On method
+# On method of Watcher
 
 ```javascript
 EnapsoFileWatcher.on('fileChanged', function (message) {
@@ -45,7 +45,7 @@ EnapsoFileWatcher.on('fileChanged', function (message) {
 
 on method which need to call when you want to see the `filename`, `id`, `path` and `time of change` occur in a file separatly it show us these information in our termianl when a change in a file which you added in watch.
 
-# Remove Method
+# Remove Method of Watcher
 
 ```javascript
 EnapsoFileWatcher.remove([{ path: './watchfile/check.txt', id: 'as213123' }])
@@ -59,7 +59,7 @@ EnapsoFileWatcher.remove([{ path: './watchfile/check.txt', id: 'as213123' }])
 
 Remove method which you can use to remove a single file or more than one file from watcher from which you need to pass the `path` or `id` or both (`path` and `id` )to remove a file using json array object fromat which can not be watch more.
 
-# Remove All Method
+# Remove All Method of Watcher
 
 ```javascript
 EnapsoFileWatcher.removeAll()
@@ -73,7 +73,7 @@ EnapsoFileWatcher.removeAll()
 
 Remove all method which remove all the files which are in watcher.
 
-# Get All Files in watcher
+# Get All Files from watcher
 
 ```javascript
 EnapsoFileWatcher.getWatched()
