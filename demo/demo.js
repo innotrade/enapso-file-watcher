@@ -1,6 +1,9 @@
 const { EnapsoFileWatcher } = require('../index');
 
 async function test() {
+    await EnapsoFileWatcher.on('fileChanged', function (message) {
+        console.log(message);
+    });
     await EnapsoFileWatcher.add([
         { path: './watchfile/ashesh.txt', id: '1232134' },
         { path: './watchfile/dd.txt', id: '123' },
@@ -12,9 +15,6 @@ async function test() {
         .catch((err) => {
             console.log('Error', err);
         });
-    await EnapsoFileWatcher.on('fileChanged', function (message) {
-        console.log(message);
-    });
 
     // await EnapsoFileWatcher.remove([{ path: './watchfile/ashesh.txt' }])
     //     .then((res) => {
