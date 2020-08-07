@@ -21,8 +21,8 @@
     "homepage": "https://github.com/innotrade/enapso-file-watcher#readme",
     "dependencies": {
         "chai": "^4.2.0",
-        "chokidar": "^3.4.1",
+        "chokidar": "^3.4.2",
         "filewatcher": "^3.0.1",
-        "mocha": "^8.0.1"
+        "mocha": "^8.1.1"
     }
 }

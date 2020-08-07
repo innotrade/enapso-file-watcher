@@ -1,40 +1,46 @@
 const { EnapsoFileWatcher } = require('../index');
 
-EnapsoFileWatcher.add([
-    { path: './watchfile/ashesh.txt', id: '1232134' },
-    { path: './watchfile/dd.txt', id: '123' },
-    { path: './watchfile/ddddf.txt', id: 'as213123' }
-])
-    .then(async (res) => {
-        console.log(res);
-    })
-    .catch((err) => {
-        console.log('Error', err);
+async function test() {
+    await EnapsoFileWatcher.add([
+        { path: './watchfile/ashesh.txt', id: '1232134' },
+        { path: './watchfile/dd.txt', id: '123' },
+        { path: './watchfile/ddddf.txt', id: 'as213123' }
+    ])
+        .then(async (res) => {
+            console.log('first', res);
+        })
+        .catch((err) => {
+            console.log('Error', err);
+        });
+    await EnapsoFileWatcher.on('fileChanged', function (message) {
+        console.log(message);
     });
 
-// EnapsoFileWatcher.remove([{ path: './watchfile/check.txt', id: 'as213123' }])
-//     .then((res) => {
-//         console.log(res);
-//     })
-//     .catch((err) => {
-//         console.log('Error', err);
-//     });
+    // await EnapsoFileWatcher.remove([{ path: './watchfile/ashesh.txt' }])
+    //     .then((res) => {
+    //         console.log(res);
+    //         // setTimeout(function () {
+    //         // }, 3000);
+    //     })
+    //     .catch((err) => {
+    //         console.log('Error', err);
+    //     });
 
-// EnapsoFileWatcher.removeAll()
-//     .then((res) => {
-//         console.log(res);
-//     })
-//     .catch((err) => {
-//         console.log('Error', err);
-//     });
-// EnapsoFileWatcher.getWatched()
-//     .then((res) => {
-//         console.log(res);
-//     })
-//     .catch((err) => {
-//         console.log('Error', err);
-//     });
+    // await EnapsoFileWatcher.removeAll()
+    //     .then((res) => {
+    //         console.log(res);
+    //     })
+    //     .catch((err) => {
+    //         console.log('Error', err);
+    //     });
 
-EnapsoFileWatcher.on('fileChanged', function (message) {
-    console.log(message);
-});
+    await EnapsoFileWatcher.getWatched()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log('Error', err);
+        });
+}
+
+test();
