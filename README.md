@@ -86,3 +86,17 @@ EnapsoFileWatcher.getWatched()
 ```
 
 Get watched method which retreive all files `path` and their `id` which are in watcher.
+
+# Close
+
+```javascript
+EnapsoFileWatcher.close()
+    .then((res) => {
+        console.log(res);
+    })
+    .catch((err) => {
+        console.log('Error', err);
+    });
+```
+
+close method which stop the watcher and no file gonna watch more.

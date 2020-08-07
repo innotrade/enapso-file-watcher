@@ -3,20 +3,19 @@ const { expect } = require('chai');
 const { EnapsoFileWatcher } = require('../index');
 
 describe('Enapso File Watcher Test Cases', function () {
-    it('Add Single File in Watcher', function (done) {
+    it('Add Single File in Watcher', function () {
         EnapsoFileWatcher.add([
             { path: './test/testwatchfiles/ashesh.txt', id: '1232134' }
         ])
             .then((res) => {
                 expect(res).to.have.property('statusCode', 200);
-                done();
             })
             .catch((err) => {
                 console.log(err);
             });
     });
 
-    it('Add Multiple Files in Watcher', function (done) {
+    it('Add Multiple Files in Watcher', function () {
         EnapsoFileWatcher.add([
             { path: './test/testwatchfiles/mar.txt', id: '123213454' },
             { path: './test/testwatchfiles/test.txt', id: '97567' },
@@ -24,7 +23,6 @@ describe('Enapso File Watcher Test Cases', function () {
         ])
             .then((res) => {
                 expect(res).to.have.property('statusCode', 200);
-                done();
             })
             .catch((err) => {
                 console.log(err);
@@ -85,11 +83,21 @@ describe('Enapso File Watcher Test Cases', function () {
             });
     });
 
-    it('Remove all files from Watcher', function (done) {
+    it('Remove all files from Watcher', function () {
         EnapsoFileWatcher.removeAll()
             .then((res) => {
                 expect(res).to.have.property('statusCode', 200);
-                done();
+            })
+            .catch((err) => {
+                console.log('Error', err);
+            });
+    });
+
+    
+    it('Close the Watcher', function () {
+        EnapsoFileWatcher.close()
+            .then((res) => {
+                expect(res).to.have.property('statusCode', 200);
             })
             .catch((err) => {
                 console.log('Error', err);
