@@ -26,13 +26,23 @@ async function test() {
     //         console.log('Error', err);
     //     });
 
-    // await EnapsoFileWatcher.removeAll()
-    //     .then((res) => {
-    //         console.log(res);
-    //     })
-    //     .catch((err) => {
-    //         console.log('Error', err);
-    //     });
+    await EnapsoFileWatcher.removeAll()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.log('Error', err);
+        });
+
+    await EnapsoFileWatcher.add([
+        { path: './watchfile/ashesh.txt', id: '1232134' }
+    ])
+        .then(async (res) => {
+            console.log('first', res);
+        })
+        .catch((err) => {
+            console.log('Error', err);
+        });
 
     await EnapsoFileWatcher.getWatched()
         .then((res) => {
