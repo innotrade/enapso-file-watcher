@@ -1,3 +1,7 @@
+// Innotrade Enapso File Watcher
+// (C) Copyright 2019 Innotrade GmbH, Herzogenrath, NRW, Germany
+// Author(s):  Alexander Schulze, Ashesh Goplani and Muhammad Yasir
+
 const chai = require('chai');
 const { expect } = require('chai');
 const { EnapsoFileWatcher } = require('../index');
@@ -93,7 +97,6 @@ describe('Enapso File Watcher Test Cases', function () {
             });
     });
 
-    
     it('Close the Watcher', function () {
         EnapsoFileWatcher.close()
             .then((res) => {
