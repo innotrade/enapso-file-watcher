@@ -20,9 +20,12 @@
     },
     "homepage": "https://github.com/innotrade/enapso-file-watcher#readme",
     "dependencies": {
+        "axios": "^0.21.1",
         "chai": "^4.2.0",
         "chokidar": "^3.4.3",
         "filewatcher": "^3.0.1",
-        "mocha": "^8.2.1"
+        "fs": "0.0.1-security",
+        "mocha": "^8.2.1",
+        "uuid": "^8.3.2"
     }
 }

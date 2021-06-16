@@ -5,58 +5,109 @@
 // Demo
 
 const { EnapsoFileWatcher } = require('../index');
-
+const axios = require('axios');
+const fs = require('fs');
+let baseUrl = 'https://enapso.innotrade.com';
+let headers =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjIzODMzNTUzfQ.QbZ46R4vEgnA-1JpU0OOcDpi6NvuV4jeRrkzGNlIkQ8';
 async function test() {
-    await EnapsoFileWatcher.on('fileChanged', function (message) {
+    await EnapsoFileWatcher.add([
+        {
+            path: 'C:/Users/HP/git/enapso-ontologies/EnapsoSoftwareTruckApp - Updated.owl',
+            id: '1232134'
+        }
+    ])
+        .then(async (res) => {
+            console.log('first', res);
+        })
+        .catch((err) => {
+            console.log('Error', err);
+        });
+
+    await EnapsoFileWatcher.on('fileChanged', async function (message) {
+        await clearRepo();
+        await uploadOntology();
+        await buildCache();
+        await generateApplication();
         console.log(message);
     });
-    await EnapsoFileWatcher.add([
-        { path: './watchfile/ashesh.txt', id: '1232134' },
-        { path: './watchfile/dd.txt', id: '123' },
-        { path: './watchfile/ddddf.txt', id: 'as213123' }
-    ])
-        .then(async (res) => {
-            console.log('first', res);
-        })
-        .catch((err) => {
-            console.log('Error', err);
-        });
-
-    // await EnapsoFileWatcher.remove([{ path: './watchfile/ashesh.txt' }])
-    //     .then((res) => {
-    //         console.log(res);
-    //         // setTimeout(function () {
-    //         // }, 3000);
-    //     })
-    //     .catch((err) => {
-    //         console.log('Error', err);
-    //     });
-
-    await EnapsoFileWatcher.removeAll()
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log('Error', err);
-        });
-
-    await EnapsoFileWatcher.add([
-        { path: './watchfile/ashesh.txt', id: '1232134' }
-    ])
-        .then(async (res) => {
-            console.log('first', res);
-        })
-        .catch((err) => {
-            console.log('Error', err);
-        });
-
-    await EnapsoFileWatcher.getWatched()
-        .then((res) => {
-            console.log(res);
-        })
-        .catch((err) => {
-            console.log('Error', err);
-        });
 }
-
+async function clearRepo() {
+    try {
+        await axios.post(
+            `${baseUrl}/api/enapso/objects/v1/clearContext`,
+            {
+                type: 'application/rdf+xml',
+                context: 'http://ont.enapso.com/truck/software'
+            },
+            {
+                headers: {
+                    'x-enapso-auth': headers
+                }
+            }
+        );
+        console.log('Clear Context Done');
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function uploadOntology() {
+    try {
+        await axios.post(
+            `${baseUrl}/api/enapso/objects/v1/uploadOntologyFromData`,
+            {
+                fileData: fs.readFileSync(
+                    'C:/Users/HP/git/enapso-ontologies/EnapsoSoftwareTruckApp - Updated.owl',
+                    'utf8'
+                ),
+                format: 'application/rdf+xml',
+                baseIRI: 'http://ont.enapso.com/truck/software#',
+                context: 'http://ont.enapso.com/truck/software'
+            },
+            {
+                headers: {
+                    'x-enapso-auth': headers
+                }
+            }
+        );
+        console.log('upload Ontology Done');
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function buildCache() {
+    try {
+        await axios.post(
+            `${baseUrl}/api/enapso/objects/v1/buildClassCache`,
+            {},
+            {
+                headers: {
+                    'x-enapso-auth': headers
+                }
+            }
+        );
+        console.log('Cache Done');
+    } catch (error) {
+        console.error(error);
+    }
+}
+async function generateApplication() {
+    try {
+        await axios.post(
+            `${baseUrl}/api/enapso/objects/v1/generateApplication`,
+            {
+                applicationIRI:
+                    'http://ont.enapso.com/truck/software#App_41f5cce4_0013_478b_865a_bab6974754d2'
+            },
+            {
+                headers: {
+                    'X-Enapso-Auth': headers
+                }
+            }
+        );
+        console.log('Application Generation Done');
+    } catch (error) {
+        console.error(error);
+    }
+}
 test();
