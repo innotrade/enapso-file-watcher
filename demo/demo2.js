@@ -58,7 +58,8 @@ async function createColoumn(prop) {
         schema: 'Test',
         records: [
             {
-                iri: 'http://ont.enapso.com/foundation#GridColumn' + uuidv4()
+                iri: 'http://ont.enapso.com/foundation#GridColumn' + uuidv4(),
+                sortOrder: 11
             }
         ]
     });
