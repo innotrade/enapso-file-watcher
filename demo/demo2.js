@@ -11,7 +11,7 @@ let baseUrl = 'https://enapso.innotrade.com';
 let headers =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjIzODMzMjQ2fQ.Wi53upVb2lNXoIOq9HbeZb-QYO0ezzfnyuWRmo3cIEg';
 let order = 10;
-let properties = [];
+let property = [];
 async function test() {
     await EnapsoFileWatcher.add([
         {
@@ -48,8 +48,8 @@ async function checkProperty(properties) {
     if (results.length) {
         console.log('new column added');
         for (const item of results) {
-            if (!properties.includes(item)) {
-                properties.push(item);
+            if (!property.includes(item)) {
+                property.push(item);
                 await createColoumn(splitIRI(item.prop));
             }
         }
