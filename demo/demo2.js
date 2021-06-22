@@ -58,13 +58,14 @@ async function checkProperty(properties) {
     }
 }
 async function createColoumn(prop) {
+    order = order + 1;
     let gridColumnIRI = await create({
         cls: 'http://ont.enapso.com/model/software#GridColumn',
         schema: 'Test',
         records: [
             {
                 iri: 'http://ont.enapso.com/foundation#GridColumn' + uuidv4(),
-                sortOrder: order + 1
+                sortOrder: order
             }
         ]
     });
