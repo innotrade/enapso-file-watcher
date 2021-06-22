@@ -11,6 +11,7 @@ let baseUrl = 'https://enapso.innotrade.com';
 let headers =
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjIzODMzMjQ2fQ.Wi53upVb2lNXoIOq9HbeZb-QYO0ezzfnyuWRmo3cIEg';
 let order = 10;
+let properties = [];
 async function test() {
     await EnapsoFileWatcher.add([
         {
@@ -47,7 +48,10 @@ async function checkProperty(properties) {
     if (results.length) {
         console.log('new column added');
         for (const item of results) {
-            await createColoumn(splitIRI(item.prop));
+            if (!properties.includes(item)) {
+                properties.push(item);
+                await createColoumn(splitIRI(item.prop));
+            }
         }
     } else {
         console.log('Nothing Changed in Truck Class');
