@@ -9,11 +9,11 @@ const axios = require('axios');
 const fs = require('fs');
 let baseUrl = 'https://enapso.innotrade.com';
 let headers =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjIzODMzNTUzfQ.QbZ46R4vEgnA-1JpU0OOcDpi6NvuV4jeRrkzGNlIkQ8';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaEBnbWFpbC5jb20iLCJpZCI6ImI2NTRmMTk2LWY1MGMtNGRkYi1hNjA5LTMwMTY1YWRhNGY0MSIsImlhdCI6MTYzNDA0MDIzMn0.S1-yLtRiY5UjpK8SWYL4IzNRmglMUTt1tNUImJC1tHY';
 async function test() {
     await EnapsoFileWatcher.add([
         {
-            path: 'C:/Users/Ashesh/enapso-ontologies/EnapsoSoftwareTruckApp - Updated.owl',
+            path: 'C:/Users/Ashesh/testOntologies/EBUCCDMOntology.owl',
             id: '1232134'
         }
     ])
@@ -28,7 +28,7 @@ async function test() {
         await clearRepo();
         await uploadOntology();
         await buildCache();
-        await generateApplication();
+        // await generateApplication();
         console.log(message);
     });
 }
@@ -38,7 +38,7 @@ async function clearRepo() {
             `${baseUrl}/api/enapso/objects/v1/clearContext`,
             {
                 type: 'application/rdf+xml',
-                context: 'http://ont.enapso.com/truck/software'
+                context: 'http://www.ebu.ch/metadata/ontologies/ebucore/ebucore'
             },
             {
                 headers: {
@@ -57,12 +57,13 @@ async function uploadOntology() {
             `${baseUrl}/api/enapso/objects/v1/uploadOntologyFromData`,
             {
                 fileData: fs.readFileSync(
-                    'C:/Users/Ashesh/enapso-ontologies/EnapsoSoftwareTruckApp - Updated.owl',
+                    'C:/Users/Ashesh/testOntologies/EBUCCDMOntology.owl',
                     'utf8'
                 ),
                 format: 'application/rdf+xml',
-                baseIRI: 'http://ont.enapso.com/truck/software#',
-                context: 'http://ont.enapso.com/truck/software'
+                baseIRI:
+                    'http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#',
+                context: 'http://www.ebu.ch/metadata/ontologies/ebucore/ebucore'
             },
             {
                 headers: {
@@ -91,23 +92,23 @@ async function buildCache() {
         console.error(error);
     }
 }
-async function generateApplication() {
-    try {
-        await axios.post(
-            `${baseUrl}/api/enapso/objects/v1/generateApplication`,
-            {
-                applicationIRI:
-                    'http://ont.enapso.com/truck/software#App_41f5cce4_0013_478b_865a_bab6974754d2'
-            },
-            {
-                headers: {
-                    'X-Enapso-Auth': headers
-                }
-            }
-        );
-        console.log('Application Generation Done');
-    } catch (error) {
-        console.error(error);
-    }
-}
+// async function generateApplication() {
+//     try {
+//         await axios.post(
+//             `${baseUrl}/api/enapso/objects/v1/generateApplication`,
+//             {
+//                 applicationIRI:
+//                     'http://ont.enapso.com/truck/software#App_41f5cce4_0013_478b_865a_bab6974754d2'
+//             },
+//             {
+//                 headers: {
+//                     'X-Enapso-Auth': headers
+//                 }
+//             }
+//         );
+//         console.log('Application Generation Done');
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 test();

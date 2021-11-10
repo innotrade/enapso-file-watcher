@@ -9,13 +9,13 @@ const axios = require('axios');
 const fs = require('fs');
 let baseUrl = 'https://enapso.innotrade.com';
 let headers =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjIzODMzMjQ2fQ.Wi53upVb2lNXoIOq9HbeZb-QYO0ezzfnyuWRmo3cIEg';
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFzaGVzaC5nb3BsYW5pQGdtYWlsLmNvbSIsImlkIjoiMjBlNTFiMGUtZDQwMy00ZTZiLTk5OWQtMThhZmY4YTRlNTU4IiwiaWF0IjoxNjM2NDUzMzUzfQ.b-kmGPgSRYF1-tUH8aea1q8gUMAeYQHyrnLRFFUKVdI';
 let order = 10;
 let property = [];
 async function test() {
     await EnapsoFileWatcher.add([
         {
-            path: 'C:/Users/HP/git/enapso-ontologies/EnapsoTruckOntology.owl',
+            path: 'C:/Users/Ashesh/enapso-ontologies/EnapsoTruckOntology.owl',
             id: '1232134'
         }
     ])
@@ -41,6 +41,7 @@ function splitIRI(item) {
     return res[1];
 }
 async function checkProperty(properties) {
+    let property = [];
     let prop = await getProperties();
     const results = prop.filter(
         ({ prop: id1 }) => !properties.some(({ prop: id2 }) => id2 === id1)
@@ -48,8 +49,8 @@ async function checkProperty(properties) {
     if (results.length) {
         console.log('new column added');
         for (const item of results) {
-            if (!property.includes(item)) {
-                property.push(item);
+            if (!property.includes(item.prop)) {
+                property.push(item.prop);
                 await createColoumn(splitIRI(item.prop));
             }
         }
@@ -156,7 +157,7 @@ async function uploadOntology() {
             `${baseUrl}/api/enapso/objects/v1/uploadOntologyFromData`,
             {
                 fileData: fs.readFileSync(
-                    'C:/Users/HP/git/enapso-ontologies/EnapsoTruckOntology.owl',
+                    'C:/Users/Ashesh/enapso-ontologies/EnapsoTruckOntology.owl',
                     'utf8'
                 ),
                 format: 'application/rdf+xml',
